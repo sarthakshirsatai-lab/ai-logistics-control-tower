@@ -34,6 +34,7 @@ Escalate to human — VIP customer,
 order >€200, regional impact >20 shipments
 
 **Latest simulation run:**
+![Agent 1 Simulation Results](agent1_simulation_results_3.png)
 10 shipments | 11 exceptions | 
 5 auto-executed | 6 escalated to human
 
