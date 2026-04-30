@@ -1,160 +1,75 @@
+import json
+import random
 from datetime import datetime, timedelta
 from pathlib import Path
 
-NOW = datetime(2026, 4, 28, 13, 0, 0)
+BASE_DATE = datetime(2026, 4, 28, 14, 0, 0)
 
-SHIPMENTS = [
-    {
-        "shipment_id": "EU-DE-001",
-        "courier": "DHL",
-        "country": "Germany",
-        "postcode": "10115",
-        "sla_tier": "Tier2",
-        "sla_deadline": NOW + timedelta(hours=1.5),
-        "status": "out_for_delivery",
-        "attempt_count": 0,
-        "address_complete": True,
-        "is_vip": False,
-        "order_value_eur": 85,
-        "courier_otd_rate": 0.96,
-        "regional_delay": False,
-    },
-    {
-        "shipment_id": "EU-DE-002",
-        "courier": "DPD",
-        "country": "Germany",
-        "postcode": "20095",
-        "sla_tier": "Tier1",
-        "sla_deadline": NOW + timedelta(hours=8),
-        "status": "failed_attempt",
-        "attempt_count": 1,
-        "address_complete": True,
-        "is_vip": False,
-        "order_value_eur": 45,
-        "courier_otd_rate": 0.90,
-        "regional_delay": False,
-    },
-    {
-        "shipment_id": "EU-DE-003",
-        "courier": "DHL",
-        "country": "Germany",
-        "postcode": "80331",
-        "sla_tier": "Tier1",
-        "sla_deadline": NOW + timedelta(hours=20),
-        "status": "in_transit",
-        "attempt_count": 0,
-        "address_complete": False,
-        "is_vip": True,
-        "order_value_eur": 240,
-        "courier_otd_rate": 0.97,
-        "regional_delay": False,
-    },
-    {
-        "shipment_id": "EU-FR-004",
-        "courier": "DPD",
-        "country": "France",
-        "postcode": "75001",
-        "sla_tier": "Tier2",
-        "sla_deadline": NOW + timedelta(hours=1.8),
-        "status": "out_for_delivery",
-        "attempt_count": 0,
-        "address_complete": True,
-        "is_vip": False,
-        "order_value_eur": 60,
-        "courier_otd_rate": 0.89,
-        "regional_delay": True,
-    },
-    {
-        "shipment_id": "EU-FR-005",
-        "courier": "SpeedX Logistics",
-        "country": "France",
-        "postcode": "69001",
-        "sla_tier": "Tier1",
-        "sla_deadline": NOW + timedelta(hours=30),
-        "status": "in_transit",
-        "attempt_count": 0,
-        "address_complete": True,
-        "is_vip": False,
-        "order_value_eur": 35,
-        "courier_otd_rate": 0.70,
-        "regional_delay": False,
-    },
-    {
-        "shipment_id": "EU-FR-006",
-        "courier": "SpeedX Logistics",
-        "country": "France",
-        "postcode": "13001",
-        "sla_tier": "Tier1",
-        "sla_deadline": NOW + timedelta(hours=48),
-        "status": "delivered",
-        "attempt_count": 1,
-        "address_complete": True,
-        "is_vip": False,
-        "order_value_eur": 110,
-        "courier_otd_rate": 0.72,
-        "regional_delay": False,
-    },
-    {
-        "shipment_id": "EU-NL-007",
-        "courier": "PostNL",
-        "country": "Netherlands",
-        "postcode": "1017",
-        "sla_tier": "Tier2",
-        "sla_deadline": NOW + timedelta(hours=5),
-        "status": "failed_attempt",
-        "attempt_count": 2,
-        "address_complete": True,
-        "is_vip": True,
-        "order_value_eur": 310,
-        "courier_otd_rate": 0.95,
-        "regional_delay": False,
-    },
-    {
-        "shipment_id": "EU-NL-008",
-        "courier": "DHL",
-        "country": "Netherlands",
-        "postcode": "3011",
-        "sla_tier": "Tier1",
-        "sla_deadline": NOW + timedelta(hours=12),
-        "status": "in_transit",
-        "attempt_count": 0,
-        "address_complete": True,
-        "is_vip": False,
-        "order_value_eur": 55,
-        "courier_otd_rate": 0.95,
-        "regional_delay": False,
-    },
-    {
-        "shipment_id": "EU-NL-009",
-        "courier": "SpeedX Logistics",
-        "country": "Netherlands",
-        "postcode": "2511",
-        "sla_tier": "Tier1",
-        "sla_deadline": NOW + timedelta(hours=1.2),
-        "status": "in_transit",
-        "attempt_count": 0,
-        "address_complete": False,
-        "is_vip": False,
-        "order_value_eur": 220,
-        "courier_otd_rate": 0.68,
-        "regional_delay": False,
-    },
-    {
-        "shipment_id": "EU-DE-010",
-        "courier": "DPD",
-        "country": "Germany",
-        "postcode": "50667",
-        "sla_tier": "Tier1",
-        "sla_deadline": NOW + timedelta(hours=36),
-        "status": "in_transit",
-        "attempt_count": 0,
-        "address_complete": True,
-        "is_vip": False,
-        "order_value_eur": 70,
-        "courier_otd_rate": 0.91,
-        "regional_delay": False,
-    },
+
+def _compute_now():
+    log_path = Path("data/shipment_log.json")
+    if not log_path.exists():
+        return BASE_DATE
+    try:
+        log = json.loads(log_path.read_text(encoding="utf-8"))
+        run_dates = {e["run_date"] for e in log}
+        return BASE_DATE + timedelta(days=len(run_dates))
+    except Exception:
+        return BASE_DATE
+
+
+NOW = _compute_now()
+
+COURIERS = {
+    "DHL": (0.95, 0.98),
+    "PostNL": (0.93, 0.97),
+    "DPD": (0.88, 0.93),
+    "Zipovva Exxpress": (0.65, 0.75),
+}
+
+SHIPMENT_TEMPLATES = [
+    {"shipment_id": "EU-DE-001", "country": "Germany",     "postcode": "10115", "sla_tier": "Tier2", "address_complete": True,  "is_vip": False, "order_value_eur": 85,  "regional_delay": False},
+    {"shipment_id": "EU-DE-002", "country": "Germany",     "postcode": "20095", "sla_tier": "Tier1", "address_complete": True,  "is_vip": False, "order_value_eur": 45,  "regional_delay": False},
+    {"shipment_id": "EU-DE-003", "country": "Germany",     "postcode": "80331", "sla_tier": "Tier1", "address_complete": False, "is_vip": True,  "order_value_eur": 240, "regional_delay": False},
+    {"shipment_id": "EU-FR-004", "country": "France",      "postcode": "75001", "sla_tier": "Tier2", "address_complete": True,  "is_vip": False, "order_value_eur": 60,  "regional_delay": True},
+    {"shipment_id": "EU-FR-005", "country": "France",      "postcode": "69001", "sla_tier": "Tier1", "address_complete": True,  "is_vip": False, "order_value_eur": 35,  "regional_delay": False},
+    {"shipment_id": "EU-FR-006", "country": "France",      "postcode": "13001", "sla_tier": "Tier1", "address_complete": True,  "is_vip": False, "order_value_eur": 110, "regional_delay": False},
+    {"shipment_id": "EU-NL-007", "country": "Netherlands", "postcode": "1017",  "sla_tier": "Tier2", "address_complete": True,  "is_vip": True,  "order_value_eur": 310, "regional_delay": False},
+    {"shipment_id": "EU-NL-008", "country": "Netherlands", "postcode": "3011",  "sla_tier": "Tier1", "address_complete": True,  "is_vip": False, "order_value_eur": 55,  "regional_delay": False},
+    {"shipment_id": "EU-NL-009", "country": "Netherlands", "postcode": "2511",  "sla_tier": "Tier1", "address_complete": False, "is_vip": False, "order_value_eur": 220, "regional_delay": False},
+    {"shipment_id": "EU-DE-010", "country": "Germany",     "postcode": "50667", "sla_tier": "Tier1", "address_complete": True,  "is_vip": False, "order_value_eur": 70,  "regional_delay": False},
 ]
+
+SLA_HOURS = {"Tier1": 72, "Tier2": 24}
+
+
+def build_shipments():
+    order_creation = NOW.replace(hour=9, minute=0, second=0, microsecond=0)
+    courier_list = list(COURIERS.keys())
+    assignments = courier_list * 2          # guarantee 2 per courier (8 shipments)
+    assignments += random.choices(courier_list, k=2)  # distribute remaining 2 randomly
+    random.shuffle(assignments)
+
+    shipments = []
+    for tmpl, courier in zip(SHIPMENT_TEMPLATES, assignments):
+        otd_min, otd_max = COURIERS[courier]
+        otd_rate = round(random.uniform(otd_min, otd_max), 2)
+        roll = random.random()
+        if roll > otd_rate:
+            status, attempt_count = "failed_attempt", 1
+        else:
+            status, attempt_count = random.choice(["out_for_delivery", "delivered"]), 0
+        s = dict(tmpl)
+        s["courier"] = courier
+        s["courier_otd_rate"] = otd_rate
+        s["status"] = status
+        s["attempt_count"] = attempt_count
+        s["sla_deadline"] = order_creation + timedelta(hours=SLA_HOURS[tmpl["sla_tier"]])
+        shipments.append(s)
+    return shipments
+
+
+SHIPMENTS = build_shipments()
 
 ACTIONS = {
     "address_error": "Trigger address correction workflow; contact customer",
@@ -186,7 +101,7 @@ def check_customer_absent(s):
 
 
 def check_courier_underperformance(s):
-    if s["courier_otd_rate"] < 0.88:
+    if s["courier_otd_rate"] < 0.85:
         return {"exception_type": "courier_underperformance", "severity": "High"}
     return None
 
@@ -194,7 +109,7 @@ def check_courier_underperformance(s):
 def check_sla_breach_risk(s):
     if s["status"] != "delivered":
         hours_left = (s["sla_deadline"] - NOW).total_seconds() / 3600
-        if hours_left <= 2:
+        if hours_left < 2:
             return {"exception_type": "sla_breach_risk", "severity": "High"}
     return None
 
@@ -263,10 +178,10 @@ def format_alert(exc):
     lines = [
         f"[ALERT] {exc['shipment_id']} | {exc_label} | {exc['severity'].upper()}",
         f"Courier: {s['courier']} | Country: {s['country']} | Postcode: {s['postcode']}",
-        f"SLA Deadline: {s['sla_deadline'].strftime('%H:%M')} UTC | Hours Left: {hours_left:.1f}h | Status: {s['status']}",
+        f"SLA Deadline: {s['sla_deadline'].strftime('%Y-%m-%d %H:%M')} UTC | Hours Left: {hours_left:.1f}h | Status: {s['status']}",
     ]
     if exc["exception_type"] == "courier_underperformance":
-        lines.append(f"Courier OTD Rate: {s['courier_otd_rate']*100:.0f}% | Threshold: 88%")
+        lines.append(f"Courier OTD Rate: {s['courier_otd_rate']*100:.0f}% | Threshold: 85%")
     lines += [
         f"Action: {exc['recommended_action']}",
         f"Disposition: {disp_label}",
@@ -315,6 +230,25 @@ def save_output(alerts, shipments):
     )
 
 
+def append_to_log(shipments, exceptions):
+    Path("data").mkdir(exist_ok=True)
+    log_path = Path("data/shipment_log.json")
+    log = json.loads(log_path.read_text(encoding="utf-8")) if log_path.exists() else []
+
+    exc_map = {}
+    for e in exceptions:
+        exc_map.setdefault(e["shipment_id"], []).append(e["exception_type"])
+
+    for s in shipments:
+        entry = {k: v for k, v in s.items() if k != "sla_deadline"}
+        entry["sla_deadline"] = s["sla_deadline"].isoformat()
+        entry["run_date"] = NOW.strftime("%Y-%m-%d")
+        entry["exceptions"] = exc_map.get(s["shipment_id"], [])
+        log.append(entry)
+
+    log_path.write_text(json.dumps(log, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
 def main():
     exceptions = detect_exceptions(SHIPMENTS)
     alerts = [apply_decision_rules(e) for e in exceptions]
@@ -326,7 +260,9 @@ def main():
         print()
 
     save_output(alerts, SHIPMENTS)
+    append_to_log(SHIPMENTS, exceptions)
     print("Output saved to output/last_mile_control_tower_output.md")
+    print(f"Log updated: data/shipment_log.json ({NOW.strftime('%Y-%m-%d')})")
 
 
 if __name__ == "__main__":
