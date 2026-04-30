@@ -14,6 +14,15 @@ Built with Claude Code | Python
 Monitors simulated B2C last mile shipments across 
 Germany, France and Netherlands.
 
+## Agent 2: Courier Performance Monitor
+Analyses 30 days of accumulated shipment data
+across 300 shipments. Scores each courier on
+OTD rate, courier-attributable failures, and
+exception rate. Recommends Continue / Monitor
+/ Suspend per courier.
+
+![Agent 2 Scorecard](agent2_courier_performance.png)
+
 **Couriers:** DHL, PostNL, DPD, SpeedX Logistics 
 (fictional budget courier)
 
