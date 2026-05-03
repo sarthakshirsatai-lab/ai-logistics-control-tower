@@ -23,6 +23,22 @@ exception rate. Recommends Continue / Monitor
 
 ![Agent 2 Scorecard](agent2_courier_performance.png)
 
+
+### Agent 3 — Exception Resolution Agent
+Given a shipment exception, evaluates all available 
+remediation options and recommends the optimal action 
+using a weighted composite score across SLA Recovery, 
+Cost, and Customer Experience.
+
+- Exception types: Failed Attempt, Customer Absent, Address Error
+- Options evaluated: Parcel Locker, PUDO, Re-attempt, 
+  Express Re-ship, Proactive Compensation
+- Output: Scored decision table + AUTO-EXECUTE or 
+  ESCALATE TO DISPATCH CONTROLLER
+- Geography: Germany, France, Netherlands
+- Couriers: DHL, PostNL, DPD, Zipovva Exxpress
+
+
 **Couriers:** DHL, PostNL, DPD, SpeedX Logistics 
 (fictional budget courier)
 
