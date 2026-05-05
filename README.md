@@ -3,101 +3,91 @@
 A personal learning project — building agentic AI 
 systems that simulate operational decision-making 
 in logistics, based on 8.5 years of experience in 
-end-to-end logistics operations.
+end-to-end logistics operations across Nigeria and India.
 
 Built with Claude Code | Python
 
 ---
 
-## Agent 1 — Last Mile Exception Detector
+## What This Is
 
-Monitors simulated B2C last mile shipments across 
-Germany, France and Netherlands. Detects exceptions 
+A 5-agent system that simulates how AI can support 
+operational decision-making in European last-mile 
+delivery — across exception detection, courier 
+performance monitoring, resolution recommendations, 
+customer communication and orchestration.
+
+Each agent solves a distinct operational problem. 
+Each builds on the output of the previous one.
+
+---
+
+## Agents
+
+### Agent 1 — Last Mile Exception Detector
+Monitors B2C last mile shipments across Germany, 
+France and Netherlands. Detects delivery exceptions 
 in real-time and classifies them by type and severity.
-
-**Couriers:** DHL, PostNL, DPD, SpeedX Logistics (fictional)
-
-**Exception types detected:**
-- Failed Attempt
-- Customer Absent
-- Address Error
-- Regional Delay
-- Courier Underperformance
-
-**Latest simulation run:**
 
 ![Agent 1 Simulation Results](agent1_simulation_results_3.png)
 
-10 shipments | 11 exceptions detected | 
-5 auto-executed | 6 escalated to human
-
 ---
 
-## Agent 2 — Courier Performance Monitor
-
+### Agent 2 — Courier Performance Monitor
 Analyses 30 days of shipment data across 300 shipments. 
-Scores each courier on OTD rate, courier-attributable 
-failures and exception rate. Outputs a RAG rating with 
+Scores each courier on performance and outputs a 
 recommended action per courier.
-
-**Couriers:** DHL, PostNL, DPD, Zipovva Exxpress (fictional)
-
-**Rating bands:** 🟢 Green ≥ 93% OTD | 🟡 Amber 88–92% | 🔴 Red < 88%
-
-**Actions:** Continue / Monitor / Suspend
-
-**Latest simulation run:**
 
 ![Agent 2 Scorecard](agent2_courier_performance.png)
 
-300 shipments | 30 days | 4 couriers evaluated | 1 suspended
-
 ---
 
-## Agent 3 — Exception Resolution Agent
-
+### Agent 3 — Exception Resolution Agent
 Given a shipment exception, evaluates all available 
-remediation options and recommends the optimal action 
-using a weighted composite score across three dimensions:
-SLA Recovery (40%), Cost (35%), Customer Experience (25%).
-
-**Couriers:** DHL, PostNL, DPD, Zipovva Exxpress (fictional)
-
-**Exception types:** Failed Attempt | Customer Absent | Address Error
-
-**Options evaluated:**
-- Parcel Locker Reroute
-- PUDO Point Reroute
-- Standard Re-attempt
-- Express Re-ship
-- Proactive Compensation
-
-**Output:** Scored decision table + AUTO-EXECUTE or 
-ESCALATE TO DISPATCH CONTROLLER
-
-**Latest simulation run:**
+remediation options and recommends the optimal action. 
+Determines whether to AUTO-EXECUTE or escalate to a 
+human Dispatch Controller.
 
 ![Agent 3 Exception Resolution](agent3_exception_resolution.png)
 
-10 shipments | 5 auto-executed | 5 escalated | 
-Avg composite score: 7.17 / 10
+---
+
+### Agent 4 — Customer Communication Agent
+*(Coming soon — Thu 8 May)*
 
 ---
 
-## Coming Soon
-
-- Agent 4 — Customer Communication Agent
-- Agent 5 — Orchestrator
+### Agent 5 — Orchestrator
+*(Coming soon — Mon 12 May)*
 
 ---
 
-## Case Study
+## Geography & Couriers
 
-Full design decisions, scoring logic and simulation 
-results for all agents:
+**Countries:** Germany · France · Netherlands
 
-[AI Logistics Control Tower — Case Study](AI_Logistics_Control_Tower_Case_Study_05052026.docx)
+**Couriers:** DHL · PostNL · DPD · 
+SpeedX Logistics (Agent 1, fictional) · 
+Zipovva Exxpress (Agents 2-3, fictional)
 
 ---
 
-## Project Structure
+## Built By
+
+Sarthak Shirsat
+Founder, Acharooz | Ex-CPO, Movam Technologies | 
+IIM Mumbai MBA
+
+8.5 years across fleet management, last mile 
+logistics, B2B logistics SaaS and D2C brand building.
+
+---
+
+## Disclaimer
+
+All shipment data is simulated. 
+Courier OTD benchmarks based on 
+Parcel Monitor Q2/Q3 2024.
+SpeedX Logistics and Zipovva Exxpress 
+are fictional couriers.
+Built with Claude Code.
