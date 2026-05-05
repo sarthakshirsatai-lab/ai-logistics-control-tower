@@ -2,79 +2,102 @@
 
 A personal learning project — building agentic AI 
 systems that simulate operational decision-making 
-in logistics, based on experience in end-to-end 
-logistics operations.
+in logistics, based on 8.5 years of experience in 
+end-to-end logistics operations.
 
 Built with Claude Code | Python
 
 ---
 
-## Agent 1: Last Mile Exception Detector
+## Agent 1 — Last Mile Exception Detector
 
 Monitors simulated B2C last mile shipments across 
-Germany, France and Netherlands.
+Germany, France and Netherlands. Detects exceptions 
+in real-time and classifies them by type and severity.
 
-## Agent 2: Courier Performance Monitor
-Analyses 30 days of accumulated shipment data
-across 300 shipments. Scores each courier on
-OTD rate, courier-attributable failures, and
-exception rate. Recommends Continue / Monitor
-/ Suspend per courier.
+**Couriers:** DHL, PostNL, DPD, SpeedX Logistics (fictional)
 
-![Agent 2 Scorecard](agent2_courier_performance.png)
-
-
-### Agent 3 — Exception Resolution Agent
-Given a shipment exception, evaluates all available 
-remediation options and recommends the optimal action 
-using a weighted composite score across SLA Recovery, 
-Cost, and Customer Experience.
-
-- Exception types: Failed Attempt, Customer Absent, Address Error
-- Options evaluated: Parcel Locker, PUDO, Re-attempt, 
-  Express Re-ship, Proactive Compensation
-- Output: Scored decision table + AUTO-EXECUTE or 
-  ESCALATE TO DISPATCH CONTROLLER
-- Geography: Germany, France, Netherlands
-- Couriers: DHL, PostNL, DPD, Zipovva Exxpress
-
-
-**Couriers:** DHL, PostNL, DPD, SpeedX Logistics 
-(fictional budget courier)
-
-**SLA Windows:** 24h urban | 72h standard
-
-**5 exceptions detected:**
-- SLA Breach Risk
+**Exception types detected:**
+- Failed Attempt
 - Customer Absent
-- Courier Underperformance
 - Address Error
-- Regional Delay Spike
-
-**Decision logic:**
-Auto-execute — reroute, notify customer, 
-suspend courier
-
-Escalate to human — VIP customer, 
-order >€200, regional impact >20 shipments
+- Regional Delay
+- Courier Underperformance
 
 **Latest simulation run:**
+
 ![Agent 1 Simulation Results](agent1_simulation_results_3.png)
-10 shipments | 11 exceptions | 
+
+10 shipments | 11 exceptions detected | 
 5 auto-executed | 6 escalated to human
 
 ---
 
-## Project Structure
+## Agent 2 — Courier Performance Monitor
 
-- last_mile_agent.py — Agent 1 Python script
-- Workflows/ — Plain English agent instructions
-- output/ — Simulation results
+Analyses 30 days of shipment data across 300 shipments. 
+Scores each courier on OTD rate, courier-attributable 
+failures and exception rate. Outputs a RAG rating with 
+recommended action per courier.
+
+**Couriers:** DHL, PostNL, DPD, Zipovva Exxpress (fictional)
+
+**Rating bands:** 🟢 Green ≥ 93% OTD | 🟡 Amber 88–92% | 🔴 Red < 88%
+
+**Actions:** Continue / Monitor / Suspend
+
+**Latest simulation run:**
+
+![Agent 2 Scorecard](agent2_courier_performance.png)
+
+300 shipments | 30 days | 4 couriers evaluated | 1 suspended
 
 ---
 
-## Disclaimer
+## Agent 3 — Exception Resolution Agent
 
-All shipment data is simulated. Courier OTD 
-benchmarks based on Parcel Monitor Q2/Q3 2024. 
-SpeedX Logistics is fictional.
+Given a shipment exception, evaluates all available 
+remediation options and recommends the optimal action 
+using a weighted composite score across three dimensions:
+SLA Recovery (40%), Cost (35%), Customer Experience (25%).
+
+**Couriers:** DHL, PostNL, DPD, Zipovva Exxpress (fictional)
+
+**Exception types:** Failed Attempt | Customer Absent | Address Error
+
+**Options evaluated:**
+- Parcel Locker Reroute
+- PUDO Point Reroute
+- Standard Re-attempt
+- Express Re-ship
+- Proactive Compensation
+
+**Output:** Scored decision table + AUTO-EXECUTE or 
+ESCALATE TO DISPATCH CONTROLLER
+
+**Latest simulation run:**
+
+![Agent 3 Exception Resolution](agent3_exception_resolution.png)
+
+10 shipments | 5 auto-executed | 5 escalated | 
+Avg composite score: 7.17 / 10
+
+---
+
+## Coming Soon
+
+- Agent 4 — Customer Communication Agent
+- Agent 5 — Orchestrator
+
+---
+
+## Case Study
+
+Full design decisions, scoring logic and simulation 
+results for all agents:
+
+[AI Logistics Control Tower — Case Study](AI_Logistics_Control_Tower_Case_Study_05052026.docx)
+
+---
+
+## Project Structure
