@@ -25,27 +25,27 @@ Each agent solves a distinct operational problem. Each builds on the output of t
 ### Dashboard
 5 agents. One control tower. The dashboard shows real-time pipeline output — exceptions detected, auto-handled vs escalated, and agent-by-agent run summary.
 
-![Dashboard](Working_Web_Prototype_Screenshot_1.png)
+![Dashboard](Working%20Web%20Prototype%20Screenshot%201.png)
 
 ---
 
 ### Courier Performance
 30-day rolling scorecard across 4 couriers — RAG rating (Red / Amber / Green) with recommended action. Zipovva Exxpress flagged for suspension. Customer absent and address errors excluded from courier scoring — not courier fault.
 
-![Courier Performance](Working_Web_Prototype_Screenshot_2.png)
+![Courier Performance](Working%20Web%20Prototype%20Screenshot%202.png)
 
 ---
 
 ### Delivery Issues
 Full exception log — Shipment ID, Courier, Country, Issue Type, Urgency, Order Value, Status and Action Taken. Filterable by status.
 
-![Delivery Issues](Working_Web_Prototype_Screenshot_3.png)
+![Delivery Issues](Working%20Web%20Prototype%20Screenshot%203.png)
 
 ---
 
 ## Agent Pipeline Flow
 
-![Orchestrator Agent Flow](Orchestrator_Agent_flow.png)
+![Orchestrator Agent Flow](Orchestrator%20Agent%20flow.png)
 
 ---
 
