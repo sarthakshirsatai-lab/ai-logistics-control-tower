@@ -1,6 +1,6 @@
 # AI Logistics Control Tower
 
-A personal learning project — building agentic AI systems that simulate operational decision-making in logistics, based on 8.5 years of experience in end-to-end logistics operations, product building and D2C Brand building across Nigeria and India.
+A personal learning project — building agentic AI systems that simulate operational decision-making in logistics, based on 8.5 years of experience in end-to-end logistics operations, product building and D2C brand building across Nigeria and India.
 
 Built with Claude Code | Python | Flask
 
@@ -25,21 +25,27 @@ Each agent solves a distinct operational problem. Each builds on the output of t
 ### Dashboard
 5 agents. One control tower. The dashboard shows real-time pipeline output — exceptions detected, auto-handled vs escalated, and agent-by-agent run summary.
 
-![Dashboard](screenshots/Working_Web_Prototype_Screenshot_1.png)
+![Dashboard](Working_Web_Prototype_Screenshot_1.png)
 
 ---
 
 ### Courier Performance
 30-day rolling scorecard across 4 couriers — RAG rating (Red / Amber / Green) with recommended action. Zipovva Exxpress flagged for suspension. Customer absent and address errors excluded from courier scoring — not courier fault.
 
-![Courier Performance](screenshots/Working_Web_Prototype_Screenshot_2.png)
+![Courier Performance](Working_Web_Prototype_Screenshot_2.png)
 
 ---
 
 ### Delivery Issues
 Full exception log — Shipment ID, Courier, Country, Issue Type, Urgency, Order Value, Status and Action Taken. Filterable by status.
 
-![Delivery Issues](screenshots/Working_Web_Prototype_Screenshot_3.png)
+![Delivery Issues](Working_Web_Prototype_Screenshot_3.png)
+
+---
+
+## Agent Pipeline Flow
+
+![Orchestrator Agent Flow](Orchestrator_Agent_flow.png)
 
 ---
 
@@ -69,36 +75,40 @@ Given a shipment exception, scores all available resolution options using a comp
 ### Agent 4 — Customer Communication Agent
 Generates empathy-driven customer messages via Anthropic Claude API. Two-layer output: structured template (Layer 1) + AI-generated empathy message (Layer 2). Channel: WhatsApp (≤€150 orders) | Email + WhatsApp (>€150 orders).
 
+![Agent 4 Customer Communication](agent4_customer_communication_2.png)
+
 ---
 
 ### Agent 5 — Orchestrator + Flask Web Application
 Orchestrates all 4 agents sequentially. Serves a full Flask web application with 5 screens: Dashboard | Delivery Issues | Needs Your Decision | Courier Performance | Decision History. Human-in-the-loop: Dispatch Controller can APPROVE / REJECT / MODIFY escalated decisions.
 
+![Agent 5 Orchestrator](agent5_orchestrator_Final.png)
+
 ---
 
 ## Tech Stack
 
-- **Frontend:** HTML + CSS + JavaScript
-- **Backend:** Python + Flask
-- **AI Layer:** Anthropic Claude API
-- **Agent Framework:** Custom 5-agent pipeline (no LangChain)
-- **Data:** JSON (prototype stage)
-- **Built with:** Claude Code — plain English prompts only
+🔹 Frontend: HTML + CSS + JavaScript
+🔹 Backend: Python + Flask
+🔹 AI Layer: Anthropic Claude API
+🔹 Agent Framework: Custom 5-agent pipeline (no LangChain)
+🔹 Data: JSON (prototype stage)
+🔹 Built with: Claude Code — plain English prompts only
 
 ---
 
 ## Geography & Couriers
 
-**Countries:** Germany · France · Netherlands  
+**Countries:** Germany · France · Netherlands
 **Couriers:** DHL · PostNL · DPD · Zipovva Exxpress (fictional)
 
 ---
 
 ## Built By
 
-**Sarthak Shirsat**  
-Founder, Acharooz | Ex-Movam | Ex Tolaram Group | IIM Mumbai MBA  
-8.5 years across fleet management, last mile logistics, B2B logistics SaaS and D2C brand building.  
+**Sarthak Shirsat**
+Founder, Acharooz | Ex-Movam | Ex Tolaram Group | IIM Mumbai MBA
+8.5 years across fleet management, last mile logistics, B2B logistics SaaS and D2C brand building.
 
 [LinkedIn](https://www.linkedin.com/in/sarthakshirsat)
 
