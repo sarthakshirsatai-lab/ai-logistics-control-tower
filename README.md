@@ -1,6 +1,6 @@
 # AI Logistics Control Tower
 
-A personal learning project — building agentic AI systems that simulate operational decision-making in logistics, based on 8.5 years of experience in end-to-end logistics operations across Nigeria and India.
+A personal learning project — building agentic AI systems that simulate operational decision-making in logistics, based on 8.5 years of experience in end-to-end logistics operations, product building and D2C Brand building across Nigeria and India.
 
 Built with Claude Code | Python | Flask
 
@@ -97,7 +97,7 @@ Orchestrates all 4 agents sequentially. Serves a full Flask web application with
 ## Built By
 
 **Sarthak Shirsat**  
-Founder, Acharooz | Ex-CPO, Movam Technologies Nigeria | IIM Mumbai MBA  
+Founder, Acharooz | Ex-Movam | Ex Tolaram Group | IIM Mumbai MBA  
 8.5 years across fleet management, last mile logistics, B2B logistics SaaS and D2C brand building.  
 
 [LinkedIn](https://www.linkedin.com/in/sarthakshirsat)
