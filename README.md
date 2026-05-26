@@ -1,4 +1,4 @@
-# AI Logistics Control Tower
+  # AI Logistics Control Tower
 
 A personal learning project — building agentic AI systems that simulate operational decision-making in logistics, based on 8.5 years of experience in end-to-end logistics operations, product building and D2C brand building across Nigeria and India.
 
@@ -92,7 +92,7 @@ Orchestrates all 4 agents sequentially. Serves a full Flask web application with
 🔹 Backend: Python + Flask
 🔹 AI Layer: Anthropic Claude API
 🔹 Agent Framework: Custom 5-agent pipeline (no LangChain)
-🔹 Data: JSON (prototype stage)
+🔹 Data: SQLite
 🔹 Built with: Claude Code — plain English prompts only
 
 ---
