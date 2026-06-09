@@ -1,8 +1,8 @@
-  # AI Logistics Control Tower
+# AI Logistics Control Tower
 
-A personal learning project — building agentic AI systems that simulate operational decision-making in logistics, based on 8.5 years of experience in end-to-end logistics operations, product building and D2C brand building across Nigeria and India.
+A personal learning project — building agentic AI systems that simulate operational decision-making in logistics, based on 9.5 years of experience in end-to-end logistics operations, product building and D2C brand building across Nigeria and India.
 
-Built with Claude Code | Python | Flask
+Built with Claude Code | Python | Flask | Anthropic Claude API | Pinecone Vector DB
 
 ---
 
@@ -14,7 +14,7 @@ Built with Claude Code | Python | Flask
 
 ## What This Is
 
-A 5-agent agentic AI system with a functional Flask web application that simulates how AI can support operational decision-making in European last-mile delivery — across exception detection, courier performance monitoring, resolution recommendations, customer communication and orchestration.
+A 6-agent agentic AI system with a functional Flask web application that simulates how AI can support operational decision-making in European last-mile delivery — across exception detection, courier performance monitoring, resolution recommendations, customer communication, orchestration, and natural language querying.
 
 Each agent solves a distinct operational problem. Each builds on the output of the previous one. A Dispatch Controller (human) reviews escalated decisions via the web app — this is human-in-the-loop AI in practice.
 
@@ -23,7 +23,7 @@ Each agent solves a distinct operational problem. Each builds on the output of t
 ## Working Prototype — Screenshots
 
 ### Dashboard
-5 agents. One control tower. The dashboard shows real-time pipeline output — exceptions detected, auto-handled vs escalated, and agent-by-agent run summary.
+6 agents. One control tower. The dashboard shows real-time pipeline output — exceptions detected, auto-handled vs escalated, and agent-by-agent run summary.
 
 ![Dashboard](Working%20Web%20Prototype%20Screenshot%201.png)
 
@@ -43,13 +43,20 @@ Full exception log — Shipment ID, Courier, Country, Issue Type, Urgency, Order
 
 ---
 
+### SQL Query Assistant
+Plain English querying on top of the SQLite database. Any logistics professional can ask questions without knowing SQL — and get instant answers. Self-correction retry loop fires automatically if the first SQL query fails or returns empty.
+
+![SQL Query Assistant](agent6_sql_query_assistant.png)
+
+---
+
 ## Agent Pipeline Flow
 
 ![Orchestrator Agent Flow](Orchestrator%20Agent%20flow.png)
 
 ---
 
-## The 5 Agents
+## The 6 Agents
 
 ### Agent 1 — Last Mile Exception Detector
 Monitors B2C last mile shipments across Germany, France and Netherlands. Detects delivery exceptions and classifies them by type (failed_attempt, customer_absent, address_error) and urgency (HIGH / MEDIUM / LOW).
@@ -86,12 +93,35 @@ Orchestrates all 4 agents sequentially. Serves a full Flask web application with
 
 ---
 
+### Agent 6 — SQL Query Assistant
+Enables any logistics professional to query the SQLite database in plain English — no SQL knowledge needed. One Claude API call converts the question to SQL, executes it locally, and returns a plain English answer. Features a self-correction retry loop: if the first SQL query fails or returns empty, the agent retries automatically with the error context included.
+
+**Architecture:**
+- Plain English question → Claude API → SQL query generated
+- SQL runs locally against SQLite database
+- Result formatted in plain English — no second API call
+- Data never leaves the machine after the SQL generation step
+- Self-correction loop: retry with error context on failure
+
+**Sample outputs:**
+- "Which courier had the most failures?" → PostNL — 10 courier-attributable failures
+- "What is the OTD rate for PostNL?" → 95.0%
+- "How many shipments were handled by DHL?" → 34
+
+**Cost:** ~$0.001 per query — roughly ₹0.10 per question
+
+**Production note:** In this prototype, the database schema is shared with the AI to generate queries. In production, deploy on AWS Bedrock or Azure AI — so nothing leaves the enterprise environment. The logic is the same. The infrastructure is what changes.
+
+![Agent 6 SQL Query Assistant](agent6_sql_query_assistant.png)
+
+---
+
 ## Tech Stack
 
 🔹 Frontend: HTML + CSS + JavaScript
 🔹 Backend: Python + Flask
-🔹 AI Layer: Anthropic Claude API
-🔹 Agent Framework: Custom 5-agent pipeline (no LangChain)
+🔹 AI Layer: Anthropic Claude API (claude-sonnet-4-5)
+🔹 Agent Framework: Custom 6-agent pipeline (no LangChain)
 🔹 Data: SQLite
 🔹 Built with: Claude Code — plain English prompts only
 
@@ -108,7 +138,7 @@ Orchestrates all 4 agents sequentially. Serves a full Flask web application with
 
 **Sarthak Shirsat**
 Founder, Acharooz | Ex-Movam | Ex Tolaram Group | IIM Mumbai MBA
-8.5 years across fleet management, last mile logistics, B2B logistics SaaS and D2C brand building.
+9.5 years across fleet management, last mile logistics, B2B logistics SaaS and D2C brand building.
 
 [LinkedIn](https://www.linkedin.com/in/sarthakshirsat)
 
